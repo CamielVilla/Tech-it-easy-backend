@@ -1,12 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.domain;
 
-import javax.persistence.*;
-
-@Entity
-public class Television {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+public class CreateTelevision {
 
     private String type;
     private String brand;
@@ -14,7 +8,7 @@ public class Television {
     private Double price;
     private Double availableSize;
     private Double refreshRate;
-    private String screenType;
+    private Enum screenType;
     private String screenQuality;
     private Boolean smartTv;
     private Boolean wifi;
@@ -24,51 +18,6 @@ public class Television {
     private  Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
-
-
-    public Television() {
-    }
-
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        Id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
-
-    public Television(String name, Double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getScreenType() {
-        return screenType;
-    }
-
-    public void setScreenType(String screenType) {
-        this.screenType = screenType;
-    }
 
     public String getType() {
         return type;
@@ -118,7 +67,13 @@ public class Television {
         this.refreshRate = refreshRate;
     }
 
+    public Enum getScreenType() {
+        return screenType;
+    }
 
+    public void setScreenType(Enum screenType) {
+        this.screenType = screenType;
+    }
 
     public String getScreenQuality() {
         return screenQuality;
@@ -192,5 +147,3 @@ public class Television {
         this.sold = sold;
     }
 }
-
-
