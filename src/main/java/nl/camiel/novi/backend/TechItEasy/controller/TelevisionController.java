@@ -2,7 +2,7 @@ package nl.camiel.novi.backend.TechItEasy.controller;
 
 import nl.camiel.novi.backend.TechItEasy.domain.CreateTelevision;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
-import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
+import nl.camiel.novi.backend.TechItEasy.domain.UpdateTelevision;
 import nl.camiel.novi.backend.TechItEasy.service.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,10 @@ public class TelevisionController {
 
 
 private TelevisionService televisionService;
-private TelevisionRepository televisionRepository;
 
-
-//    Television samsungtv = new Television("lg", 45.0);
-
-@Autowired
-    public TelevisionController(TelevisionService televisionService, TelevisionRepository televisionRepository) {
+    @Autowired
+    public TelevisionController(TelevisionService televisionService) {
         this.televisionService = televisionService;
-        this.televisionRepository = televisionRepository;
     }
 
     @GetMapping
@@ -46,18 +41,19 @@ private TelevisionRepository televisionRepository;
         return ResponseEntity.ok(television);
     }
 
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<String> deleteTv(@PathVariable Long id) {
-//    final Television television = televisionService.deleteTvById(id);
-//    televisionRepository.delete(television);
-//    return  ResponseEntity.ok("Tv met id " + television.getId() + " verwijderd");
-//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTv(@PathVariable Long id) {
     televisionService.deleteTv(id);
     return ResponseEntity.ok("Tv with id " + id + " deleted");
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<String> updateTv(@RequestBody UpdateTelevision updateTelevision, @PathVariable Long id) {
+    final Television television = televisionService.updateTvPriceAndSold(updateTelevision, id);
+    return ResponseEntity.ok("Television updated");
+    };
+
 
 
 }

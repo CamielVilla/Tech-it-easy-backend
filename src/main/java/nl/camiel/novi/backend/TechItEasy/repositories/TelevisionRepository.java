@@ -9,8 +9,4 @@ import java.util.Optional;
 
 public interface TelevisionRepository extends JpaRepository <Television, Long> {
 
-   // Optional<Television> getTelevisionByNameEqualsIgnoreCase(String Name);
-
-
-   // Optional<List<Television>> getAllTvs (List tvList);
 }

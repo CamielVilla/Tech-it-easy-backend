@@ -1,7 +1,9 @@
 package nl.camiel.novi.backend.TechItEasy.service;
 
+import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
 import nl.camiel.novi.backend.TechItEasy.domain.CreateTelevision;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
+import nl.camiel.novi.backend.TechItEasy.domain.UpdateTelevision;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -20,10 +22,14 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
+
     public Television getTvById(Long id) {
-//        final Optional<Television> televisionOptional = televisionRepository.getTelevisionByName(name);
-        final Television television = televisionRepository.findById(id).get();
-        return television;
+        if(televisionRepository.existsById(id)){
+            final Television television = televisionRepository.findById(id).get();
+            return television;
+        }else {
+            throw new IdNotExistException(id);
+        }
     }
 
     public List<Television> getAllTvs() {
@@ -56,13 +62,28 @@ public class TelevisionService {
         return savedTelevision;
     }
 
-//    public Television deleteTvById(Long id){
-//        final Television television = televisionRepository.findById(id).get();
-//        return television;
-//    }
 
-public void  deleteTv(Long id){
+
+public void deleteTv(Long id){
     televisionRepository.deleteById(id);
+}
+
+public Television updateTvPriceAndSold(UpdateTelevision updateTelevision, Long id){
+
+    if(televisionRepository.existsById(id)) {
+        Television televisionToUpdate = televisionRepository.findById(id).get();
+        televisionToUpdate.setPrice(updateTelevision.getPrice());
+        televisionToUpdate.setSold(updateTelevision.getSold());
+        final Television updatedTelevision = televisionRepository.save(televisionToUpdate);
+        return updatedTelevision;
+    }
+    else {
+        throw new IdNotExistException(id);
+    }
+
+
+
+
 }
 
 }
