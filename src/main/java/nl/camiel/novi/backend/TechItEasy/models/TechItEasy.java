@@ -1,6 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.models;
 
-import nl.camiel.novi.backend.TechItEasy.models.Television;
+import nl.camiel.novi.backend.TechItEasy.domain.Television;
 
 import java.util.ArrayList;
 import java.util.List;

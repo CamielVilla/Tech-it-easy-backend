@@ -3,7 +3,7 @@
 //import nl.camiel.novi.backend.TechItEasy.Exception.RecordNotFoundException;
 //import nl.camiel.novi.backend.TechItEasy.models.ScreenType;
 //import nl.camiel.novi.backend.TechItEasy.models.TechItEasy;
-//import nl.camiel.novi.backend.TechItEasy.models.Television;
+//import nl.camiel.novi.backend.TechItEasy.domain.Television;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
 //

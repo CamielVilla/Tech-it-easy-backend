@@ -1,4 +1,4 @@
-package nl.camiel.novi.backend.TechItEasy.models;
+package nl.camiel.novi.backend.TechItEasy.domain;
 
 import javax.persistence.*;
 

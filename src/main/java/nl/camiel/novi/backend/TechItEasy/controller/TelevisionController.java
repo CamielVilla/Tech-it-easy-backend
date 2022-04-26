@@ -1,6 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
-import nl.camiel.novi.backend.TechItEasy.models.Television;
+import nl.camiel.novi.backend.TechItEasy.domain.Television;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
