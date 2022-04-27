@@ -14,8 +14,6 @@ import java.util.List;
 @RequestMapping("/tvs")
 public class TelevisionController {
 
-
-
 private TelevisionService televisionService;
 
     @Autowired

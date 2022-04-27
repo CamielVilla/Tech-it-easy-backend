@@ -4,6 +4,7 @@ import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
 import nl.camiel.novi.backend.TechItEasy.domain.CreateTelevision;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.UpdateTelevision;
+import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -36,6 +37,8 @@ public class TelevisionService {
     final List<Television> televisionList = televisionRepository.findAll();
     return televisionList;
     }
+
+
 
     public Television addTv(CreateTelevision createTelevision){
         Television television = new Television();
@@ -80,10 +83,26 @@ public Television updateTvPriceAndSold(UpdateTelevision updateTelevision, Long i
     else {
         throw new IdNotExistException(id);
     }
+}
 
-
-
-
+public TelevisionDTO toDTO (Television television){
+        var dto = new TelevisionDTO();
+        dto.setAmbiLight(television.getAmbiLight());
+        dto.setAvailableSize(television.getAvailableSize());
+        dto.setBluetooth(television.getBluetooth());
+        dto.setBrand(television.getBrand());
+        dto.setHdr(television.getHdr());
+        dto.setName(television.getName());
+        dto.setScreenQuality(television.getScreenQuality());
+        dto.setType(television.getType());
+        dto.setWifi(television.getWifi());
+        dto.setRefreshRate(television.getRefreshRate());
+        dto.setVoiceControl(television.getVoiceControl());
+        dto.setSmartTv(television.getSmartTv());
+        dto.setScreenType(television.getScreenType());
+        dto.setPrice(television.getPrice());
+        dto.setId(television.getId());
+        return dto;
 }
 
 }
