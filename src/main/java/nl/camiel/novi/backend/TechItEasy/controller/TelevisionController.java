@@ -1,11 +1,14 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
+import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
+import nl.camiel.novi.backend.TechItEasy.Exception.PriceInvalidException;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.service.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,9 +38,13 @@ private TelevisionService televisionService;
     }
 
     @PostMapping
-    public ResponseEntity<Television> addTv(@Valid @RequestBody CreateTelevisionDTO televisionDTO){
-        final Television television = televisionService.addTv(televisionDTO);
-        return ResponseEntity.ok(television);
+    public ResponseEntity<Television> addTv(@Valid @RequestBody CreateTelevisionDTO createTelevisionDTO, BindingResult result){
+        if(result.hasErrors()){
+            throw new PriceInvalidException();
+        }else {
+            final Television television = televisionService.addTv(createTelevisionDTO);
+            return ResponseEntity.ok(television);
+        }
     }
 
 
