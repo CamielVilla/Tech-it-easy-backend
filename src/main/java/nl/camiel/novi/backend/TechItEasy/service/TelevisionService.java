@@ -1,17 +1,15 @@
 package nl.camiel.novi.backend.TechItEasy.service;
 
 import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
-import nl.camiel.novi.backend.TechItEasy.domain.CreateTelevision;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
-import nl.camiel.novi.backend.TechItEasy.domain.UpdateTelevision;
+import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TelevisionService {
@@ -23,88 +21,94 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
-
-    public Television getTvById(Long id) {
-        if(televisionRepository.existsById(id)){
-            final Television television = televisionRepository.findById(id).get();
-            return television;
-        }else {
-            throw new IdNotExistException(id);
-        }
-    }
-
-    public List<Television> getAllTvs() {
-    final List<Television> televisionList = televisionRepository.findAll();
-    return televisionList;
-    }
-
-
-
-    public Television addTv(CreateTelevision createTelevision){
-        Television television = new Television();
-
-        television.setAmbiLight(createTelevision.getAmbiLight());
-        television.setAvailableSize(createTelevision.getAvailableSize());
-        television.setBluetooth(createTelevision.getBluetooth());
-        television.setBrand(createTelevision.getBrand());
-        television.setHdr(createTelevision.getHdr());
-        television.setName(createTelevision.getName());
-        television.setOriginalStock(createTelevision.getOriginalStock());
-        television.setPrice(createTelevision.getPrice());
-        television.setRefreshRate(createTelevision.getRefreshRate());
-        television.setScreenQuality(createTelevision.getScreenQuality());
-        television.setSmartTv(createTelevision.getSmartTv());
-        television.setWifi(createTelevision.getWifi());
-        television.setVoiceControl(createTelevision.getVoiceControl());
-        television.setOriginalStock(createTelevision.getOriginalStock());
-        television.setSold(createTelevision.getSold());
-        television.setType(createTelevision.getType());
-
-        final Television savedTelevision = televisionRepository.save(television);
-
-        return savedTelevision;
-    }
-
-
-
-public void deleteTv(Long id){
-    televisionRepository.deleteById(id);
-}
-
-public Television updateTvPriceAndSold(UpdateTelevision updateTelevision, Long id){
-
-    if(televisionRepository.existsById(id)) {
-        Television televisionToUpdate = televisionRepository.findById(id).get();
-        televisionToUpdate.setPrice(updateTelevision.getPrice());
-        televisionToUpdate.setSold(updateTelevision.getSold());
-        final Television updatedTelevision = televisionRepository.save(televisionToUpdate);
-        return updatedTelevision;
-    }
-    else {
-        throw new IdNotExistException(id);
-    }
-}
-
-public TelevisionDTO toDTO (Television television){
-        var dto = new TelevisionDTO();
+    public TelevisionDTO toDTO (Television television){
+        TelevisionDTO dto = new TelevisionDTO();
         dto.setAmbiLight(television.getAmbiLight());
         dto.setAvailableSize(television.getAvailableSize());
         dto.setBluetooth(television.getBluetooth());
         dto.setBrand(television.getBrand());
         dto.setHdr(television.getHdr());
         dto.setName(television.getName());
-        dto.setScreenQuality(television.getScreenQuality());
-        dto.setType(television.getType());
-        dto.setWifi(television.getWifi());
-        dto.setRefreshRate(television.getRefreshRate());
-        dto.setVoiceControl(television.getVoiceControl());
-        dto.setSmartTv(television.getSmartTv());
-        dto.setScreenType(television.getScreenType());
         dto.setPrice(television.getPrice());
+        dto.setRefreshRate(television.getRefreshRate());
+        dto.setScreenQuality(television.getScreenQuality());
+        dto.setScreenQuality(television.getScreenQuality());
+        dto.setScreenType(television.getScreenType());
+        dto.setSmartTv(television.getSmartTv());
+        dto.setType(television.getType());
+        dto.setVoiceControl(television.getVoiceControl());
+        dto.setWifi(television.getWifi());
+        dto.setSold(television.getSold());
+        dto.setOriginalStock(television.getOriginalStock());
+        dto.setDto(true);
         dto.setId(television.getId());
         return dto;
+    }
+
+    public Television toTelevision(CreateTelevisionDTO dto){
+        var television = new Television();
+        television.setAmbiLight(dto.getAmbiLight());
+        television.setAvailableSize(dto.getAvailableSize());
+        television.setBluetooth(dto.getBluetooth());
+        television.setBrand(dto.getBrand());
+        television.setHdr(dto.getHdr());
+        television.setName(dto.getName());
+        television.setScreenQuality(dto.getScreenQuality());
+        television.setType(dto.getType());
+        television.setWifi(dto.getWifi());
+        television.setRefreshRate(dto.getRefreshRate());
+        television.setVoiceControl(dto.getVoiceControl());
+        television.setSmartTv(dto.getSmartTv());
+        television.setScreenType(dto.getScreenType());
+        television.setSold(dto.getSold());
+        television.setOriginalStock(dto.getOriginalStock());
+        return television;
+    }
+
+
+    public TelevisionDTO getTvById(Long id) {
+        if (televisionRepository.existsById(id)) {
+            TelevisionDTO televisionDTO = toDTO(televisionRepository.findById(id).get());
+            return televisionDTO;
+        } else {
+            throw new IdNotExistException(id);
+        }
+    }
+
+    public List<TelevisionDTO> getAllTvs() {
+    final List<Television> televisionList = televisionRepository.findAll();
+    List<TelevisionDTO> DTOList = new ArrayList<>();
+    for (Television tv : televisionList){
+        DTOList.add(toDTO(tv));
+        }
+    return DTOList;
+    }
+
+
+
+    public Television addTv(CreateTelevisionDTO createTelevisionDTO){
+        Television savedTelevision = televisionRepository.save(toTelevision(createTelevisionDTO));
+        return savedTelevision;
+    }
+
+
+
+public void deleteTv(Long id){
+    if(televisionRepository.existsById(id)) {
+        televisionRepository.deleteById(id);
+    }
+    else {
+        throw new IdNotExistException(id);
+    }
 }
 
+public Television updateTv (CreateTelevisionDTO createTelevisionDTO, Long id){
+        Television television = televisionRepository.findById(id).get();
+        television.setName(createTelevisionDTO.getName());
+        television.setPrice(createTelevisionDTO.getPrice());
+        televisionRepository.save(television);
+        return  television;
+    }
 }
 
 
