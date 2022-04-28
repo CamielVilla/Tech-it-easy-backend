@@ -1,13 +1,17 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
-import nl.camiel.novi.backend.TechItEasy.domain.CreateTelevision;
+import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
+import nl.camiel.novi.backend.TechItEasy.Exception.PriceInvalidException;
 import nl.camiel.novi.backend.TechItEasy.domain.Television;
-import nl.camiel.novi.backend.TechItEasy.domain.UpdateTelevision;
+import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
+import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.service.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,21 +26,25 @@ private TelevisionService televisionService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Television>> getTvs(){
-    final List<Television> tvList = televisionService.getAllTvs();
+    public ResponseEntity<List<TelevisionDTO>> getTvs(){
+    final List<TelevisionDTO> tvList = televisionService.getAllTvs();
     return ResponseEntity.ok(tvList);
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody ResponseEntity<Television> getTv(@PathVariable Long id) {
-       final Television television = televisionService.getTvById(id);
-        return ResponseEntity.ok(television);
+    public @ResponseBody ResponseEntity<TelevisionDTO> getTv(@PathVariable Long id) {
+        final TelevisionDTO televisionDTO = televisionService.getTvById(id);
+        return ResponseEntity.ok(televisionDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Television> addTv(@RequestBody  CreateTelevision createTelevision){
-        final Television television = televisionService.addTv(createTelevision);
-        return ResponseEntity.ok(television);
+    public ResponseEntity<Television> addTv(@Valid @RequestBody CreateTelevisionDTO createTelevisionDTO, BindingResult result){
+        if(result.hasErrors()){
+            throw new PriceInvalidException();
+        }else {
+            final Television television = televisionService.addTv(createTelevisionDTO);
+            return ResponseEntity.ok(television);
+        }
     }
 
 
@@ -46,10 +54,12 @@ private TelevisionService televisionService;
     return ResponseEntity.ok("Tv with id " + id + " deleted");
     }
 
+
+
     @PutMapping("{id}")
-    public ResponseEntity<String> updateTv(@RequestBody UpdateTelevision updateTelevision, @PathVariable Long id) {
-    final Television television = televisionService.updateTvPriceAndSold(updateTelevision, id);
-    return ResponseEntity.ok("Television updated");
+    public ResponseEntity<Television> updateTv(@Valid @RequestBody CreateTelevisionDTO televisionDTO, @PathVariable Long id) {
+    Television television = televisionService.updateTv(televisionDTO, id);
+    return ResponseEntity.ok(television);
     };
 
 

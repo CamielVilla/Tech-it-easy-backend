@@ -1,6 +1,7 @@
 package nl.camiel.novi.backend.TechItEasy.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Television {

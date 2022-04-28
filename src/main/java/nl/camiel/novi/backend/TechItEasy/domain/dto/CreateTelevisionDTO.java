@@ -1,11 +1,24 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-import nl.camiel.novi.backend.TechItEasy.domain.Television;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class CreateTelevisionDTO {
+
     private String type;
+
     private String brand;
+
+    @NotBlank
     private String name;
+
+    @Min(1)
+    private Double price;
+
+
     private Double availableSize;
     private Double refreshRate;
     private String screenType;
@@ -16,6 +29,25 @@ public class CreateTelevisionDTO {
     private Boolean hdr;
     private Boolean bluetooth;
     private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
+    private Boolean dto;
+
+    public Integer getOriginalStock() {
+        return originalStock;
+    }
+
+    public void setOriginalStock(Integer originalStock) {
+        this.originalStock = originalStock;
+    }
+
+    public Integer getSold() {
+        return sold;
+    }
+
+    public void setSold(Integer sold) {
+        this.sold = sold;
+    }
 
     public String getType() {
         return type;
@@ -41,6 +73,13 @@ public class CreateTelevisionDTO {
         this.name = name;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Double getAvailableSize() {
         return availableSize;
@@ -122,22 +161,17 @@ public class CreateTelevisionDTO {
         this.ambiLight = ambiLight;
     }
 
-    public Television toTelevision(){
-        var television = new Television();
-        television.setAmbiLight(ambiLight);
-        television.setAvailableSize(availableSize);
-        television.setBluetooth(bluetooth);
-        television.setBrand(brand);
-        television.setHdr(hdr);
-        television.setName(name);
-        television.setScreenQuality(screenQuality);
-        television.setType(type);
-        television.setWifi(wifi);
-        television.setRefreshRate(refreshRate);
-        television.setVoiceControl(voiceControl);
-        television.setSmartTv(smartTv);
-        television.setScreenType(screenType);
-        return television;
+    public Boolean getDto() {
+        return dto;
     }
 
+    public void setDto(Boolean dto) {
+        this.dto = dto;
+    }
+
+
+
+
 }
+
+

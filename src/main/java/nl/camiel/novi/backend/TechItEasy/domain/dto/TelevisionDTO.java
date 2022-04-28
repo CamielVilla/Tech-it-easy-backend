@@ -1,11 +1,15 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-import nl.camiel.novi.backend.TechItEasy.domain.Television;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class TelevisionDTO {
-    private Long Id;
+    private Long id;
     private String type;
     private String brand;
+
+    @NotBlank
     private String name;
     private Double price;
     private Double availableSize;
@@ -18,13 +22,32 @@ public class TelevisionDTO {
     private Boolean hdr;
     private Boolean bluetooth;
     private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
+    private Boolean dto;
+
+    public Integer getOriginalStock() {
+        return originalStock;
+    }
+
+    public void setOriginalStock(Integer originalStock) {
+        this.originalStock = originalStock;
+    }
+
+    public Integer getSold() {
+        return sold;
+    }
+
+    public void setSold(Integer sold) {
+        this.sold = sold;
+    }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getType() {
@@ -139,27 +162,14 @@ public class TelevisionDTO {
         this.ambiLight = ambiLight;
     }
 
-    public static TelevisionDTO fromTelevision (Television television){
-        var dto = new TelevisionDTO();
-        dto.getAmbiLight();
-        dto.getAvailableSize();
-        dto.getBluetooth();
-        dto.getBrand();
-        dto.getHdr();
-        dto.getName();
-        dto.getPrice();
-        dto.getId();
-        dto.getRefreshRate();
-        dto.getScreenQuality();
-        dto.getScreenQuality();
-        dto.getScreenType();
-        dto.getSmartTv();
-        dto.getType();
-        dto.getVoiceControl();
-        dto.getWifi();
-
+    public Boolean getDto() {
         return dto;
     }
+
+    public void setDto(Boolean dto) {
+        this.dto = dto;
+    }
+
 }
 
 
