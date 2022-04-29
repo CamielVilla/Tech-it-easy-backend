@@ -105,8 +105,12 @@ public void deleteTv(Long id){
 
 public Television updateTv (CreateTelevisionDTO createTelevisionDTO, Long id){
         Television television = televisionRepository.findById(id).get();
-        television.setName(createTelevisionDTO.getName());
-        television.setPrice(createTelevisionDTO.getPrice());
+        if (createTelevisionDTO.getName() != null){
+            television.setName(createTelevisionDTO.getName());
+        }
+        if (createTelevisionDTO.getPrice() != null){
+            television.setPrice((createTelevisionDTO.getPrice()));
+        }
         televisionRepository.save(television);
         return  television;
     }

@@ -12,8 +12,8 @@ public class CreateTelevisionDTO {
 
     private String brand;
 
-    @NotBlank(message = "can not be blank")
-    @Max(value = 50, message = "can not be bigger then 50")
+
+
     private String name;
 
     @Min(value = 1, message = "has to be more then 1")

@@ -52,8 +52,8 @@ private TelevisionService televisionService;
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Television> updateTv(@Valid @RequestBody CreateTelevisionDTO televisionDTO, @PathVariable Long id) {
-    Television television = televisionService.updateTv(televisionDTO, id);
+    public ResponseEntity<Television> updateTv(@Valid @RequestBody CreateTelevisionDTO createTelevisionDTO, @PathVariable Long id) {
+    Television television = televisionService.updateTv(createTelevisionDTO, id);
     return ResponseEntity.ok(television);
     };
 
