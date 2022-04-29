@@ -62,6 +62,7 @@ public class TelevisionService {
         television.setScreenType(dto.getScreenType());
         television.setSold(dto.getSold());
         television.setOriginalStock(dto.getOriginalStock());
+        television.setPrice(dto.getPrice());
         return television;
     }
 

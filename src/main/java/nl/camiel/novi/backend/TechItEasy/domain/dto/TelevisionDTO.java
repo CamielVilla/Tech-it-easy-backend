@@ -8,8 +8,6 @@ public class TelevisionDTO {
     private Long id;
     private String type;
     private String brand;
-
-    @NotBlank
     private String name;
     private Double price;
     private Double availableSize;
