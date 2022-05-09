@@ -1,6 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
-import nl.camiel.novi.backend.TechItEasy.domain.Television;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.service.TelevisionService;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/tvs")
 public class TelevisionController {
 
-private TelevisionService televisionService;
+private final TelevisionService televisionService;
 
     @Autowired
     public TelevisionController(TelevisionService televisionService) {

@@ -1,7 +1,7 @@
 package nl.camiel.novi.backend.TechItEasy.service;
 
 import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
-import nl.camiel.novi.backend.TechItEasy.domain.Television;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
@@ -21,7 +21,7 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
-    public TelevisionDTO toDTO (Television television){
+    public TelevisionDTO tvToDTO(Television television){
         TelevisionDTO dto = new TelevisionDTO();
         dto.setAmbiLight(television.getAmbiLight());
         dto.setAvailableSize(television.getAvailableSize());
@@ -69,7 +69,7 @@ public class TelevisionService {
 
     public TelevisionDTO getTvById(Long id) {
         if (televisionRepository.existsById(id)) {
-            TelevisionDTO televisionDTO = toDTO(televisionRepository.findById(id).get());
+            TelevisionDTO televisionDTO = tvToDTO(televisionRepository.findById(id).get());
             return televisionDTO;
         } else {
             throw new IdNotExistException(id);
@@ -80,7 +80,7 @@ public class TelevisionService {
     final List<Television> televisionList = televisionRepository.findAll();
     List<TelevisionDTO> DTOList = new ArrayList<>();
     for (Television tv : televisionList){
-        DTOList.add(toDTO(tv));
+        DTOList.add(tvToDTO(tv));
         }
     return DTOList;
     }

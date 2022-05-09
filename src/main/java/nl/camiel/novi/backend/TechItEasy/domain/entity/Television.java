@@ -1,7 +1,6 @@
-package nl.camiel.novi.backend.TechItEasy.domain;
+package nl.camiel.novi.backend.TechItEasy.domain.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Television {
@@ -26,6 +25,16 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
+    @OneToOne (mappedBy = "television")
+    private Remote remote;
+
+    public Remote getRemote() {
+        return remote;
+    }
+
+    public void setRemote(Remote remotes) {
+        this.remote = remotes;
+    }
 
     public Television() {
     }
