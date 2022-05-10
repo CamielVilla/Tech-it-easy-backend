@@ -1,21 +1,13 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-public class CreateRemote {
+public class CreateRemoteDTO {
     private String compatibleWith;
     private String batteryType;
     private String name;
     private String brand;
     private Double price;
     private int originalStock;
-    private Long televisionId;
 
-    public Long getTelevisionId() {
-        return televisionId;
-    }
-
-    public void setTelevisionId(Long televisionId) {
-        this.televisionId = televisionId;
-    }
 
     public String getCompatibleWith() {
         return compatibleWith;

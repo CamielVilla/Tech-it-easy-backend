@@ -1,5 +1,7 @@
 package nl.camiel.novi.backend.TechItEasy.domain.entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,11 +17,14 @@ public class Remote {
     private Double price;
     private int originalStock;
 
+    @JsonIgnore
     @OneToOne
     private Television television;
 
     public Television getTelevision() {
         return television;
+
+
     }
 
     public void setTelevision(Television television) {

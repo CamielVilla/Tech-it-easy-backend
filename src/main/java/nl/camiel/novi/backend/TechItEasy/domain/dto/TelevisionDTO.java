@@ -1,5 +1,7 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +25,15 @@ public class TelevisionDTO {
     private Integer originalStock;
     private Integer sold;
     private Boolean dto;
+    private Remote remote;
+
+    public Remote getRemote() {
+        return remote;
+    }
+
+    public void setRemote(Remote remote) {
+        this.remote = remote;
+    }
 
     public Integer getOriginalStock() {
         return originalStock;

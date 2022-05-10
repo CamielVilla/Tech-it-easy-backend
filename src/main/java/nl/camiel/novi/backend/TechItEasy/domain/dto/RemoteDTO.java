@@ -1,6 +1,5 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 
 public class RemoteDTO {
     private Long id;
@@ -10,16 +9,6 @@ public class RemoteDTO {
     private String brand;
     private Double price;
     private int originalStock;
-    private TelevisionDTO televisionDTO;
-
-
-    public TelevisionDTO getTelevisionDTO() {
-        return televisionDTO;
-    }
-
-    public void setTelevisionDTO(TelevisionDTO televisionDTO) {
-        this.televisionDTO = televisionDTO;
-    }
 
     public Long getId() {
         return id;

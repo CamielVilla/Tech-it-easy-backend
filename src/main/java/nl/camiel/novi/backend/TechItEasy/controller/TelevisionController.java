@@ -1,5 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
@@ -57,6 +58,10 @@ private final TelevisionService televisionService;
     return ResponseEntity.ok(television);
     };
 
-
+    @PutMapping("{id}/remote")
+    public ResponseEntity<String> addRemoteToTv (@RequestBody Remote remote, @PathVariable Long id) {
+        televisionService.addRemoteToTelevision(id, remote.getId());
+        return ResponseEntity.ok("remote added");
+    }
 
 }

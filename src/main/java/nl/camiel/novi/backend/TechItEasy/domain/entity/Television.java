@@ -1,6 +1,9 @@
 package nl.camiel.novi.backend.TechItEasy.domain.entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
+
 
 @Entity
 public class Television {
@@ -25,15 +28,16 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    @OneToOne (mappedBy = "television")
+
+    @OneToOne
     private Remote remote;
 
     public Remote getRemote() {
         return remote;
     }
 
-    public void setRemote(Remote remotes) {
-        this.remote = remotes;
+    public void setRemote(Remote remote) {
+        this.remote = remote;
     }
 
     public Television() {
