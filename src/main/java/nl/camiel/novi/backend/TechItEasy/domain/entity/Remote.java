@@ -18,13 +18,11 @@ public class Remote {
     private int originalStock;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne (mappedBy = "remote")
     private Television television;
 
     public Television getTelevision() {
         return television;
-
-
     }
 
     public void setTelevision(Television television) {

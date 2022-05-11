@@ -3,6 +3,10 @@ package nl.camiel.novi.backend.TechItEasy.domain.entity;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -32,40 +36,38 @@ public class Television {
     @OneToOne
     private Remote remote;
 
+    @ManyToOne
+    @JoinColumn (name = "cimodule_id")
+    CiModule ciModule;
+
+    @ManyToMany
+    @JoinTable(name = "television_wallbracket",
+                joinColumns = { @JoinColumn(name = "television_id")},
+                inverseJoinColumns = {@JoinColumn(name = "wallbracket_id")})
+    private Set<WallBracket> wallBrackets;
+
+    public Set<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+
+    public void setWallBrackets(Set<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
+    }
+
+    public CiModule getCiModule() {
+        return ciModule;
+    }
+
+    public void setCiModule(CiModule ciModule) {
+        this.ciModule = ciModule;
+    }
+
     public Remote getRemote() {
         return remote;
     }
 
     public void setRemote(Remote remote) {
         this.remote = remote;
-    }
-
-    public Television() {
-    }
-
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        Id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
-
-    public Television(String name, Double price) {
-        this.name = name;
-        this.price = price;
     }
 
     public Long getId() {

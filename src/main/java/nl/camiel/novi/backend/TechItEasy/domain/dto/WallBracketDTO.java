@@ -1,27 +1,16 @@
-package nl.camiel.novi.backend.TechItEasy.domain.entity;
+package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@Entity
-public class WallBracket {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+public class WallBracketDTO {
     private Long id;
     private String size;
     private Boolean ajustable;
     private String name;
     private Double price;
-
-
-    @ManyToMany (mappedBy = "wallBrackets")
-    @JsonIgnore
-    private Set<Television> televisions = new HashSet<Television>();
-
+    private Set<Television> televisions;
 
     public Set<Television> getTelevisions() {
         return televisions;

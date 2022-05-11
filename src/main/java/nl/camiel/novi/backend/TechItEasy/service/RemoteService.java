@@ -1,5 +1,6 @@
 package nl.camiel.novi.backend.TechItEasy.service;
 
+import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateRemoteDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.RemoteDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
@@ -12,6 +13,14 @@ public class RemoteService {
 
     public RemoteService(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
+    }
+
+    public RemoteDTO getRemoteById (Long id){
+        if (remoteRepository.existsById(id)){
+            return toRemoteDTO(remoteRepository.findById(id).get());
+        }else {
+            throw new IdNotExistException(id);
+        }
     }
 
     public Remote toRemote(CreateRemoteDTO createRemoteDTO) {
@@ -32,6 +41,7 @@ public class RemoteService {
         public RemoteDTO toRemoteDTO (Remote remote){
             final RemoteDTO remoteDTO = new RemoteDTO();
             remoteDTO.setId(remote.getId());
+            remoteDTO.setName(remote.getName());
             remoteDTO.setBatteryType(remote.getBatteryType());
             remoteDTO.setBrand(remote.getBrand());
             remoteDTO.setPrice(remote.getPrice());

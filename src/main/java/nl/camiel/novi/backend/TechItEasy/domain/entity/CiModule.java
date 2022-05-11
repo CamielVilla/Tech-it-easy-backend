@@ -1,33 +1,25 @@
 package nl.camiel.novi.backend.TechItEasy.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-public class WallBracket {
+public class CiModule {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private String size;
-    private Boolean ajustable;
     private String name;
+    private String type;
     private Double price;
 
+    @OneToMany (mappedBy = "ciModule")
+    private List<Television> televisions;
 
-    @ManyToMany (mappedBy = "wallBrackets")
-    @JsonIgnore
-    private Set<Television> televisions = new HashSet<Television>();
-
-
-    public Set<Television> getTelevisions() {
+    public List<Television> getTelevisions() {
         return televisions;
     }
 
-    public void setTelevisions(Set<Television> televisions) {
+    public void setTelevisions(List<Television> televisions) {
         this.televisions = televisions;
     }
 
@@ -39,28 +31,20 @@ public class WallBracket {
         this.id = id;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public Boolean getAjustable() {
-        return ajustable;
-    }
-
-    public void setAjustable(Boolean ajustable) {
-        this.ajustable = ajustable;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Double getPrice() {

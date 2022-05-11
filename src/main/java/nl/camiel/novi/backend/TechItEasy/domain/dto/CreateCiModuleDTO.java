@@ -1,18 +1,22 @@
-package nl.camiel.novi.backend.TechItEasy.domain.entity;
+package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
-public class CIModule {
-    private Long id;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
+
+import java.util.List;
+
+public class CreateCiModuleDTO {
+
     private String name;
     private String type;
     private Double price;
+    List<Television> televisions;
 
-
-    public Long getId() {
-        return id;
+    public List<Television> getTelevisions() {
+        return televisions;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
     }
 
     public String getName() {

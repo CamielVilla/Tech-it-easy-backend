@@ -1,28 +1,37 @@
 package nl.camiel.novi.backend.TechItEasy.service;
 
 import nl.camiel.novi.backend.TechItEasy.Exception.IdNotExistException;
+import nl.camiel.novi.backend.TechItEasy.domain.dto.WallBracketDTO;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.CiModule;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.WallBracket;
+import nl.camiel.novi.backend.TechItEasy.repositories.CiModuleRepository;
 import nl.camiel.novi.backend.TechItEasy.repositories.RemoteRepository;
 import nl.camiel.novi.backend.TechItEasy.repositories.TelevisionRepository;
+import nl.camiel.novi.backend.TechItEasy.repositories.WallBracketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
     private final RemoteRepository remoteRepository;
+    private final CiModuleRepository ciModuleRepository;
+    private final WallBracketRepository wallBracketRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteRepository remoteRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteRepository remoteRepository, CiModuleRepository ciModuleRepository, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteRepository = remoteRepository;
+        this.ciModuleRepository = ciModuleRepository;
+        this.wallBracketRepository = wallBracketRepository;
     }
-
 
     public Television toTelevision(CreateTelevisionDTO dto){
 
@@ -68,6 +77,7 @@ public class TelevisionService {
         dto.setDto(true);
         dto.setId(television.getId());
         dto.setRemote(television.getRemote());
+        dto.setCiModule(television.getCiModule());
         return dto;
     }
 
@@ -75,7 +85,12 @@ public class TelevisionService {
 
     public TelevisionDTO getTvById(Long id) {
         if (televisionRepository.existsById(id)) {
-            TelevisionDTO televisionDTO = toTelevisionDTO(televisionRepository.findById(id).get());
+            Television television = televisionRepository.findById(id).get();
+            TelevisionDTO televisionDTO = toTelevisionDTO(television);
+            if(television.getWallBrackets() != null){
+                Set<WallBracket> wallBrackets = getAllWallBracketsFromTelevision(id);
+                televisionDTO.setWallBrackets(wallBrackets);
+            }
             return televisionDTO;
         } else {
             throw new IdNotExistException(id);
@@ -86,7 +101,10 @@ public class TelevisionService {
     final List<Television> televisionList = televisionRepository.findAll();
     List<TelevisionDTO> DTOList = new ArrayList<>();
     for (Television tv : televisionList){
-        DTOList.add(toTelevisionDTO(tv));
+        Set<WallBracket> wallBrackets = getAllWallBracketsFromTelevision(tv.getId());
+        TelevisionDTO televisionDTO = toTelevisionDTO(tv);
+        televisionDTO.setWallBrackets(wallBrackets);
+        DTOList.add(televisionDTO);
         }
     return DTOList;
     }
@@ -131,6 +149,37 @@ public Television updateTv (CreateTelevisionDTO createTelevisionDTO, Long id){
             throw new IdNotExistException(televisionId);
         }
     }
+
+    public void addCiModuleToTelevision (Long televisionId, Long ciModuleId) {
+        if (televisionRepository.existsById(televisionId) && ciModuleRepository.existsById(ciModuleId)) {
+            Television television = televisionRepository.findById(televisionId).get();
+            CiModule ciModule = ciModuleRepository.findById(ciModuleId).get();
+            television.setCiModule(ciModule);
+            televisionRepository.save(television);
+        } else {
+            throw new IdNotExistException(ciModuleId);
+        }
+    }
+
+    public void addWallBracketToTelevision (Long televisionId, Long wallBracketId){
+        if (wallBracketRepository.existsById(wallBracketId) && televisionRepository.existsById(televisionId)){
+            Television television = televisionRepository.findById(televisionId).get();
+            WallBracket wallBracket = wallBracketRepository.findById(wallBracketId).get();
+            Set<WallBracket> wallBrackets = television.getWallBrackets();
+            wallBrackets.add(wallBracket);
+            televisionRepository.save(television);
+
+        }else{
+            throw new IdNotExistException(wallBracketId);
+        }
+    }
+
+    public Set<WallBracket> getAllWallBracketsFromTelevision (Long id) {
+            Television television = televisionRepository.findById(id).get();
+            Set<WallBracket> wallBrackets = television.getWallBrackets();
+           return wallBrackets;
+        }
+
 
 
 }

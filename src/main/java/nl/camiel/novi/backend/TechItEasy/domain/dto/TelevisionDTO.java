@@ -1,10 +1,11 @@
 package nl.camiel.novi.backend.TechItEasy.domain.dto;
 
+import nl.camiel.novi.backend.TechItEasy.domain.entity.CiModule;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.WallBracket;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Set;
 
 public class TelevisionDTO {
     private Long id;
@@ -26,6 +27,24 @@ public class TelevisionDTO {
     private Integer sold;
     private Boolean dto;
     private Remote remote;
+    private CiModule ciModule;
+    private Set<WallBracket> wallBrackets;
+
+    public Set<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+
+    public void setWallBrackets(Set<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
+    }
+
+    public CiModule getCiModule() {
+        return ciModule;
+    }
+
+    public void setCiModule(CiModule ciModule) {
+        this.ciModule = ciModule;
+    }
 
     public Remote getRemote() {
         return remote;

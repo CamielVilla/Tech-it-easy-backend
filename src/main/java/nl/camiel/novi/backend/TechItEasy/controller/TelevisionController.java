@@ -1,9 +1,11 @@
 package nl.camiel.novi.backend.TechItEasy.controller;
 
+import nl.camiel.novi.backend.TechItEasy.domain.entity.CiModule;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Remote;
 import nl.camiel.novi.backend.TechItEasy.domain.entity.Television;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.CreateTelevisionDTO;
 import nl.camiel.novi.backend.TechItEasy.domain.dto.TelevisionDTO;
+import nl.camiel.novi.backend.TechItEasy.domain.entity.WallBracket;
 import nl.camiel.novi.backend.TechItEasy.service.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/tvs")
@@ -62,6 +65,23 @@ private final TelevisionService televisionService;
     public ResponseEntity<String> addRemoteToTv (@RequestBody Remote remote, @PathVariable Long id) {
         televisionService.addRemoteToTelevision(id, remote.getId());
         return ResponseEntity.ok("remote added");
+    }
+
+    @PutMapping("{id}/cimodule")
+    public ResponseEntity<TelevisionDTO> addCiModuleToTv (@RequestBody CiModule ciModule, @PathVariable Long id){
+        televisionService.addCiModuleToTelevision(id, ciModule.getId());
+        return ResponseEntity.ok(televisionService.getTvById(id));
+    }
+
+    @PutMapping("{id}/wallbracket")
+    public ResponseEntity<TelevisionDTO> addWallBracketToTelevision(@RequestBody WallBracket wallBracket, @PathVariable Long id){
+        televisionService.addWallBracketToTelevision(id, wallBracket.getId());
+        return ResponseEntity.ok(televisionService.getTvById(id));
+    }
+
+    @GetMapping("{id}/wallbrackets")
+    public ResponseEntity<Set<WallBracket>> getAllWallBracketsFromTelevisionById (@PathVariable Long id){
+        return ResponseEntity.ok(televisionService.getAllWallBracketsFromTelevision(id));
     }
 
 }
